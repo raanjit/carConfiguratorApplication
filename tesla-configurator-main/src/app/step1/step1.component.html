@@ -1,0 +1,56 @@
+<div *ngIf="showComponent">
+  <br />
+  <h1>Step 1:Choose your Model and color</h1>
+  <table>
+    <tbody style="border: 0px">
+      <tr>
+        <td>
+          <div *ngIf="models | async as models">
+            <label for="modelSelect">Model:&nbsp;</label>
+            <select
+              class="modelSelect"
+              name="modelSelect"
+              id="modelSelect"
+              [(ngModel)]="modelSelect"
+              (change)="onModelSelect(modelSelect)"
+            >
+              <option [value]="modelSelect" selected>choose...</option>
+              <option
+                *ngFor="let model of models; let i = index"
+                [ngValue]="model"
+                #selectedChoice
+              >
+                {{ model.description }}
+              </option>
+            </select>
+          </div>
+        </td>
+
+        <td>
+          <div *ngIf="selectedChoice">
+            <label for="colorSelect">Color:&nbsp;</label>
+            <select
+              class="colorSelect"
+              name="colorSelect"
+              id="colorSelect"
+              [(ngModel)]="colorSelect"
+              (change)="onColorSelect(colorSelect)"
+            >
+              <option [value]="colorSelect" selected>choose...</option>
+              <option
+                *ngFor="let color of checkColor; let i = index"
+                [ngValue]="color"
+              >
+                {{ color.description }}
+              </option>
+            </select>
+          </div>
+        </td>
+        &nbsp;
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="optionsSelected" [ngStyle]="{ width: '100%' }">
+    <img [src]="imageUrl?.src" id="Image" />
+  </div>
+</div>

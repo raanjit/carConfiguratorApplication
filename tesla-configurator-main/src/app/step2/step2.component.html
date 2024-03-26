@@ -1,0 +1,68 @@
+<div *ngIf="showComponent">
+  <br />
+  <h1>Step :2 select your config and options</h1>
+  <table>
+    <tbody style="border: 0px">
+      <tr>
+        <td>
+          <div *ngIf="configList.configs">
+            <label for="configSelect">Config:&nbsp;</label>
+            <select
+              class="configSelect"
+              name="configSelect"
+              id="configSelect"
+              [(ngModel)]="configSelect"
+              (change)="onSelect(configSelect)"
+            >
+              <option [value]="configSelect" selected>choose...</option>
+              <option
+                *ngFor="let config of configList.configs; let i = index"
+                [ngValue]="config"
+              >
+                {{ config.description }}
+              </option>
+            </select>
+          </div>
+        </td>
+      </tr>
+      <tr *ngIf="configList">
+        <td>
+          <div>
+            <label *ngIf="configSelect"
+              >Range:&nbsp;{{ configSelect.range }}</label
+            >
+            <label *ngIf="configSelect"
+              >Miles-Max speed:&nbsp;{{ configSelect.speed }}</label
+            >
+            <label *ngIf="configSelect"
+              >Cost:&nbsp;{{
+                configSelect.price.toFixed(2) | currency : "USD" : "symbol"
+              }}</label
+            >
+          </div>
+          <div>
+            <label>Tow Hitch?&nbsp;</label>
+            <input
+              type="checkbox"
+              name="includeTow"
+              id="includeTow"
+              [(ngModel)]="configList.towHitch"
+            />
+          </div>
+          <div>
+            <label>Yoke steering wheel?&nbsp;</label>
+            <input
+              type="checkbox"
+              name="includeYoke"
+              id="includeYoke"
+              [checked]="configList.yoke"
+            />
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+    <img [src]="imageUrl?.src" id="Image" />
+  </div>
+</div>

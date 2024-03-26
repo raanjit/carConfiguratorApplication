@@ -1,0 +1,59 @@
+<div *ngIf="showComponent">
+  <br />
+  <h1>Step 3:Summary</h1>
+  <h2>Your Tesla {{ modelList.description }}</h2>
+  <table style="width: 80%">
+    <tr>
+      <td style="font-weight: bold">{{ config.description }}</td>
+      <td>{{ config.price | currency : "USD" : "symbol" }}</td>
+    </tr>
+    <tr>
+      <td>
+        Range:&nbsp;{{ config.range }} miles-Max speed:&nbsp;{{ config.speed }}
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td style="font-weight: bold">{{ color.description }}</td>
+      <td>{{ color.price | currency : "USD" : "symbol" }}</td>
+    </tr>
+    <tr>
+      <td style="font-weight: bold">Tow Hitch Package</td>
+      <td *ngIf="configList?.towHitch; else temp">
+        {{ price.toFixed(2) | currency : "USD" : "symbol" }}
+      </td>
+      <ng-template #temp>
+        <td>{{ 0 | currency : "USD" : "symbol" }}</td>
+      </ng-template>
+    </tr>
+  </table>
+  <table style="width: 80%">
+    <tr>
+      <td style="font-weight: bold; width: 75%">TOTAL COST</td>
+      <td *ngIf="configList?.towHitch; else noprice">
+        {{
+          calculateTotal(price, config.price, color.price).toFixed(2)
+            | currency : "USD" : "symbol"
+        }}
+      </td>
+      <ng-template #noprice>
+        <td>
+          {{
+            calculateTotal(0.0, config.price, color.price).toFixed(2)
+              | currency : "USD" : "symbol"
+          }}
+        </td>
+      </ng-template>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <div class="width100">
+          <div class="divider light"></div>
+        </div>
+      </td>
+    </tr>
+  </table>
+  <div [ngStyle]="{ width: '100%' }">
+    <img [src]="imageUrl?.src" id="Image" />
+  </div>
+</div>
